@@ -1,0 +1,17 @@
+{
+  "name": "log-inspector-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lesson starter: reading logs and handling CLI commands",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "generate:log": "node scripts/generate-big-log.js 20",
+    "demo:readfile": "node src/readfile-demo.js src/data/big-server.log",
+    "demo:stream": "node src/readfile-stream.js src/data/big-server.log"
+  },
+  "dependencies": {
+    "commander": "^15.0.0"
+  }
+}
