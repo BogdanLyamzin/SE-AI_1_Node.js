@@ -1,0 +1,7 @@
+<%- include('partials/header.ejs', {title}) %>
+    <% for (const contact of contacts) { %>
+    <li>
+        <%= contact.name %>. Phone: <%= contact.phone %>. Email: <%= contact.email %>
+    </li>
+    <% } %>
+<%- include('partials/footer.ejs') %>
