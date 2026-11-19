@@ -7,7 +7,7 @@ const validateBody = (schema: z.ZodType) => {
         if(!result.success) {
             return res.status(400).json({
                 error: "Validation failed",
-                details: result.error
+                details: result.error.issues
             });
         }
         req.body = result.data;

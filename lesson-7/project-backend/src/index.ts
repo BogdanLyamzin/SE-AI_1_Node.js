@@ -26,4 +26,4 @@ app.use("/api/contacts", contactRouter);
 app.use(notFoundHanler);
 app.use(errorHandler);
 
-app.listen(3000, ()=> console.log("Server running on 3000 port"));
+app.listen(3001, ()=> console.log("Server running on 3000 port"));
