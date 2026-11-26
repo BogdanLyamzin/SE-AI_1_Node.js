@@ -17,3 +17,12 @@ export const updateContactSchema = createContactSchema.partial().refine(
     error: "At least one field must be provided",
   },
 );
+
+export const getContactsQuerySchema = z.object({
+  page: z.coerce.number().int().positive().default(1),
+  limit: z.coerce.number().int().positive().default(10),
+  sort: z.enum(["newest", "oldest"]).default("newest"),
+  search: z.string().trim().optional()
+});
+
+export type GetContactsQuery = z.infer<typeof getContactsQuerySchema>;

@@ -1,6 +1,5 @@
 import { type Request, type Response } from "express";
 import bcrypt from "bcrypt";
-// import { randomBytes } from "node:crypto";
 
 import { prisma } from "../prisma.ts";
 
@@ -15,7 +14,7 @@ import {
   createRefreshToken,
   verifyToken,
 } from "../utils/jwt.ts";
-// console.log(randomBytes(32).toString("hex"))
+
 export const register = async (
   req: Request<{}, {}, RegisterBody>,
   res: Response,
@@ -81,18 +80,20 @@ export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
   const accessToken = createAccessToken(user.id);
   const refreshToken = createRefreshToken(user.id);
 
-  //   await prisma.refreshToken.deleteMany({
-  //       where: {
-  //           userId: user.id
-  //       }
-  //   });
+//   await prisma.$transaction([
+//     prisma.refreshToken.deleteMany({
+//         where: {
+//             userId: user.id
+//         }
+//     }),
 
-  //   await prisma.refreshToken.create({
-  //       data: {
-  //           token: refreshToken,
-  //           userId: user.id
-  //       }
-  //   });
+//     prisma.refreshToken.create({
+//         data: {
+//             token: refreshToken,
+//             userId: user.id
+//         }
+//     })
+// ]);
 
   await prisma.refreshToken.upsert({
     where: {
@@ -157,4 +158,19 @@ export const refresh = async (
     accessToken,
     refreshToken,
   });
+};
+
+export const getMe = async(req: Request, res: Response)=> {
+  res.json({
+    user: req.user
+  });
+}
+
+export const logout = async(req: Request, res: Response)=> {
+  await prisma.refreshToken.deleteMany({
+    where: {
+      userId: req.user!.id
+    }
+  });
+  res.status(204).send();
 };

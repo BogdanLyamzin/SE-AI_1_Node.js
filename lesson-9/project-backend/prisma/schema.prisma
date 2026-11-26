@@ -23,8 +23,13 @@ model Contact {
   name String
   email String @unique
   phone String @unique
+  createdAt DateTime @default(now())
+  
   category_id Int
   category Category @relation(fields: [category_id], references: [id])
+
+  user_id Int
+  user User @relation(fields: [user_id], references: [id])
 }
 
 model User {
@@ -36,6 +41,7 @@ model User {
   createdAt DateTime @default(now())
 
   refreshToken RefreshToken?
+  contacts Contact[]
 }
 
 model RefreshToken {

@@ -6,14 +6,15 @@ import isValidId from "../middlewares/isValidId.ts";
 import { getContacts, getContactById, addContact, updateContactById, deleteContactById } from "../controllers/contactsController.ts";
 
 import validateBody from "../middlewares/validateBody.ts";
+import validateQuery from "../middlewares/validateQuery.ts";
 
-import { createContactSchema, updateContactSchema } from './../validators/contactsValidator.ts';
+import { getContactsQuerySchema, createContactSchema, updateContactSchema  } from './../validators/contactsValidator.ts';
 
 const contactRouter = Router();
 
 contactRouter.use(authenticate);
 
-contactRouter.get("/", getContacts);
+contactRouter.get("/", validateQuery(getContactsQuerySchema), getContacts);
 
 contactRouter.get("/:id", isValidId, getContactById);
 
